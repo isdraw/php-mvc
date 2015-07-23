@@ -1,2 +1,0 @@
-# xiaokubi
-kubi php framework
