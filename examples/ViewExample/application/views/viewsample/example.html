@@ -1,0 +1,24 @@
+{template:header}
+<!-- 简单变量 -->
+<div>简单变量演示</div>
+{$simpleVar} <br />
+<!-- 数组变量 -->
+{$arrayVar['name']} <br />
+<!-- 对象变量 -->
+{$objectVar->name} <br />
+<!-- 条件判断 -->
+{if ifvar===true}
+ifVar 变量为true <br />
+{else}
+ifVar 变量为false <br />
+{/if}
+<!-- 循环变量 -->
+{foreach $foreachVar as $item}
+{$item["name"]} <br />
+{/foreach}
+<!-- 原始代码 -->
+{php}
+echo "helloWorld sample <br />";
+{/php}
+//模板代码参考修改自zblog在此特别感谢
+{template:footer}

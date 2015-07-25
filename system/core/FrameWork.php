@@ -27,7 +27,7 @@ class FrameWork{
      * 数据库PDO操作公共对象
      * @param string $poolname 配置名称
      * @link http://www.xiaokubi.com/kubiphp/?tag=framework-pdo
-     * @return Ambigous <unknown, Drive_PDO>
+     * @return Drive_PDO
      */
     public function pdo($poolname='default'){
         return bootstrap::pdo($poolname);
