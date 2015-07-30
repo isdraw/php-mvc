@@ -190,6 +190,7 @@ class Template{
 		if(strpos($matches[1],'=')===false){
 			return '{php} echo $' . $this->replace_dot($matches[1]) . '; {/php}';
 		}else{
+			print_r($matches);
 			return '{php} $' . $this->replace_dot($matches[1]) . '; {/php}';
 		}
 	}
@@ -220,7 +221,11 @@ class Template{
 				}
 			}
 		}
-        $content=preg_replace("/(?<=[^\\s])+\\.(?=[^\\s]+)/", '->', $content);
+		
+        $content=str_replace(' . ',' {%_dot_%} ',$content);
+		$content=str_replace('. ','{%_dot_%} ',$content);
+		$content=str_replace(' .',' {%_dot_%}',$content);
+		$content=str_replace('.','->',$content);
 		$content=str_replace('{%_dot_%}','.',$content);
 		return $content;
 	}
