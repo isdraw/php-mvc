@@ -311,5 +311,9 @@ class Drive_PDO {
         	kubi_error_tigger($text,500);
         }
 	}
+	
+	function __destruct(){
+		$this->pdo=null;
+	}
 }
 ?>
