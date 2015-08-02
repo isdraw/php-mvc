@@ -368,7 +368,7 @@ class bootstrap {
 			if(method_exists($ctrl_instance, '_'.$method)){
                 $method='_'.$method;
 			}
-			if (method_exists ( $ctrl_instance, $method )) {
+			if (method_exists ( $ctrl_instance, $method ) && $method!="__init") {
 				$params = func_get_args();
 				array_splice($params, 0,5);
 				return call_user_func_array ( array (
