@@ -32,10 +32,11 @@ class Drive_PDO {
 		$statement = $this->pdo->prepare ( $sql );
 		$result = $statement->execute ( $params );
 		$this->pdo_trigger_error($sql,$params,$statement->errorInfo ());
+		
 		if (! $result) {
 			return false;
 		} else {
-			return $statement->rowCount ();
+			return $this->pdo->lastInsertId ();
 		}
 	}
 
@@ -56,6 +57,15 @@ class Drive_PDO {
 		} else {
 			return $statement->fetchColumn ( $column );
 		}
+	}
+	
+	/**
+	 * 获取最后插入数据的ID
+	 * @link http://www.xiaokubi.com/kubiphp/?tag=drive_pdo-lastInsertId
+	 * @return string
+	 */
+	public function lastInsertId(){
+		return $this->pdo->lastInsertId ();
 	}
 
 	/**
@@ -141,15 +151,6 @@ class Drive_PDO {
 		$cmd = $replace ? 'REPLACE INTO' : 'INSERT INTO';
 		$condition = $this->implode ( $data, ',' );
 		return $this->query ( "$cmd " . $this->tablename ( $table ) . " SET {$condition['fields']}", $condition ['params'] );
-	}
-
-	/**
-	 * last_insert_id
-	 * @link http://www.xiaokubi.com/kubiphp/?tag=drive_pdo-lastInsertId
-	 * @return string
-	 */
-	public function lastInsertId() {
-		return $this->pdo->lastInsertId ();
 	}
 
 	/**
