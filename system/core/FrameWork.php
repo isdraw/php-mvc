@@ -62,5 +62,10 @@ class FrameWork{
             'route'
         ), $array);
     }
+    
+    /**
+     * 初始化
+     */
+    public function __init(){}
 }
 ?>
