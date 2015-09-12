@@ -163,7 +163,7 @@ class bootstrap {
         self::$appname=$appname;
 		if($need_create_dir){
 		    require __DIR__.'/core/Build.php';
-            Build::mkdir(array ('','config','controllers','models','views','libraries','logs'));
+            Build::mkdir(array ('','config','controllers','models','views','libraries','logs','langs'));
             Build::create_config();
 		}
 	}
@@ -466,6 +466,15 @@ class bootstrap {
                 Log::WARN($msg);
                 break;
         }
+	}
+	
+	/**
+	 * 语言扩展包
+	 * @param string $name
+	 * @return multitype:
+	 */
+	public static function lang($name){
+		return Lang::getlang(self::appath('langs/'.$name.'.lang'));
 	}
 }
 ?>
