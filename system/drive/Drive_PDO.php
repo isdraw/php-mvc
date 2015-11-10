@@ -309,7 +309,7 @@ class Drive_PDO {
         			(string)$error[0],
         			(string)$error[2],
         			json_encode($params));
-        	kubi_error_tigger($text,500);
+        	isdraw_error_tigger($text,500);
         }
 	}
 	

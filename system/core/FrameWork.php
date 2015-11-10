@@ -71,7 +71,7 @@ class FrameWork{
      * 方法没找到提示
      */
     public function __error($method=NULL){
-    	kubi_error_tigger("$this->classname::$method() is not found!",404);
+    	isdraw_error_tigger("$this->classname::$method() is not found!",404);
     }
 }
 ?>

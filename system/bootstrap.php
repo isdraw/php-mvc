@@ -6,8 +6,8 @@ define ( "RENDERER_DEFAULT", 0 );
 define ( "RENDERER_DEFAULT_PATH", 1 );
 define ( "RENDERER_HEAD", '<?php if(!defined("ALLOW_ACCESS"))exit("not access");?>' );
 
-if (! function_exists ( 'kubi_autoloader' )) {
-	function kubi_autoloader($classname) {
+if (! function_exists ( 'isdraw_autoloader' )) {
+	function isdraw_autoloader($classname) {
 		$class = strtolower ( $classname );
         $dirs=array('core');
         foreach ($dirs as $item){
@@ -18,11 +18,11 @@ if (! function_exists ( 'kubi_autoloader' )) {
     		}
         }
 	}
-	spl_autoload_register ( 'kubi_autoloader' );
+	spl_autoload_register ( 'isdraw_autoloader' );
 }
 
-if (! function_exists ( "kubi_error_handler" )) {
-	function kubi_error_handler($error_level, $error_message, $file, $line) {
+if (! function_exists ( "isdraw_error_handler" )) {
+	function isdraw_error_handler($error_level, $error_message, $file, $line) {
 		switch ($error_level) {
 			case E_NOTICE :
 			case E_USER_NOTICE :
@@ -31,31 +31,31 @@ if (! function_exists ( "kubi_error_handler" )) {
 				break;
 			case E_ERROR :
 			case E_USER_ERROR :
-				kubi_error_tigger( $error_message,500);
+				isdraw_error_tigger( $error_message,500);
 				break;
 			default :
-				kubi_error_tigger( $error_message,500);
+				isdraw_error_tigger( $error_message,500);
 				break;
 		}
 	}
-	set_error_handler ( 'kubi_error_handler' );
+	set_error_handler ( 'isdraw_error_handler' );
 }
 
-if (! function_exists ( "kubi_error_shutdown" )) {
-	function kubi_error_shutdown() {
+if (! function_exists ( "isdraw_error_shutdown" )) {
+	function isdraw_error_shutdown() {
 		$exception = error_get_last ();
-		kubi_trace_error($exception["file"],$exception['line'], $exception['message']);
+		isdraw_trace_error($exception["file"],$exception['line'], $exception['message']);
 	}
-	register_shutdown_function ( "kubi_error_shutdown" );
+	register_shutdown_function ( "isdraw_error_shutdown" );
 }
 
-if (! function_exists ( "kubi_error_tigger" )) {
-	function kubi_error_tigger($name,$state=500) {
+if (! function_exists ( "isdraw_error_tigger" )) {
+	function isdraw_error_tigger($name,$state=500) {
 			$trace = debug_backtrace ();
 			// 查找对应的非系统内容
 			for($i = 0; $i < count ( $trace ); $i ++) {
 			    $m=$trace[$i];
-			    $r=kubi_trace_error($m['file'],$m['line'], $name,$state);
+			    $r=isdraw_trace_error($m['file'],$m['line'], $name,$state);
                 if($r===true){
                     break;
                 }
@@ -69,7 +69,7 @@ if (! function_exists ( "kubi_error_tigger" )) {
  * @param unknown $line
  * @param unknown $tigger
  */
-function kubi_trace_error($file,$line,$name,$state){
+function isdraw_trace_error($file,$line,$name,$state){
     if(strpos($file, __DIR__)===false && !empty($line)){
         if(is_callable('__handle')){
             call_user_func('__handle',$state,array('file'=>$file,'line'=>$line,'name'=>$name));
@@ -194,9 +194,9 @@ class bootstrap {
 	 * @return unknown|Drive_PDO
 	 */
 	public static function pdo($name='default'){
-		global $kubi_pdo_pool;
-		if(isset($kubi_pdo_pool[$name])){
-			return $kubi_pdo_pool[$name];
+		global $isdraw_pdo_pool;
+		if(isset($isdraw_pdo_pool[$name])){
+			return $isdraw_pdo_pool[$name];
 		}else{
 			$_c=self::config($name);
 			if($_c){
@@ -211,7 +211,7 @@ class bootstrap {
 				return $_db;
 			}
 		}
-		kubi_error_tigger("key $name not found in config.php",404);
+		isdraw_error_tigger("key $name not found in config.php",404);
 		exit();
 	}
 
@@ -237,7 +237,7 @@ class bootstrap {
 		$view=trim($view,"/");
 		$templatefile = self::appath ( "views/$view.html" );
 		if (! file_exists ( $templatefile )) {
-			kubi_error_tigger ( "view $view is not exists!",404);
+			isdraw_error_tigger ( "view $view is not exists!",404);
 			return false;
 		}
 		$cachefile=self::appath ( "cache/$view.php");
@@ -256,7 +256,7 @@ class bootstrap {
 					if($option!=null){
 						$_param["bootstrap_option"]=$option;
 					}
-					extract ( $_param, EXTR_PREFIX_SAME, "kubi_prefix" );
+					extract ( $_param, EXTR_PREFIX_SAME, "isdraw_prefix" );
 					require_once $cachefile;
 					break;
 				case RENDERER_DEFAULT_PATH :
@@ -376,10 +376,10 @@ class bootstrap {
 						$method
 				), $params );
 			}else{
-				kubi_error_tigger("$type $classname::$method() is not found!",404);
+				isdraw_error_tigger("$type $classname::$method() is not found!",404);
 			}
 		} else {
-		     kubi_error_tigger("$type $classname is not found!",404);
+		     isdraw_error_tigger("$type $classname is not found!",404);
 		}
 	}
 
@@ -396,7 +396,7 @@ class bootstrap {
 		if(file_exists($lib_file)){
 			 require_once $lib_file;
 		}else{
-		      kubi_error_tigger($lib_file." is not found!",404);
+		      isdraw_error_tigger($lib_file." is not found!",404);
 		}
 	}
 
@@ -438,10 +438,10 @@ class bootstrap {
 	 * @link http://www.xiaokubi.com/kubiphp/?tag=bootstrap-log
 	 */
 	public static function log($msg,$level=LOG_INFO){
-	    global $kubi_trace_log;
-	    if($kubi_trace_log==null){
+	    global $isdraw_trace_log;
+	    if($isdraw_trace_log==null){
 	        $logHandler= Log::Init(self::appath("/logs/".date('Y-m-d').'.log'));
-	        $kubi_trace_log = Log::Init($logHandler, 15);
+	        $isdraw_trace_log = Log::Init($logHandler, 15);
 	    }
 	    switch (gettype($msg)){
 	        case "array":
