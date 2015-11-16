@@ -91,6 +91,3 @@ model
 	}
 
 有其他问题请发邮件至: nease@163.com
-=======
-# php-mvc
-官方网站:http://www.isdraw.com
