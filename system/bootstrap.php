@@ -415,6 +415,16 @@ class bootstrap {
 		}
 		return self::$name . '/' . $filename;
 	}
+	
+	/**
+	 * 主入口文件相对位置
+	 * @param string $filename	相对路径名称
+	 * @link http://www.isdraw.com/mvc/?tag=rootpath
+	 * @return string
+	 */
+	public static function rootpath($filename=""){
+		return dirname($_SERVER["SCRIPT_NAME"]).'/'.$filename;
+	}
 
 	/**
 	 * URL跳转功能
