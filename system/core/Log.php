@@ -2,7 +2,7 @@
 /**
  * 日志处理模块
  * @author kubi
- * @link http://www.xiaokubi.com/kubiphp/?tag=log
+ * @link http://www.isdraw.com/mvc/?tag=log
  */
 class Log
 {
@@ -27,7 +27,7 @@ class Log
      * 写入日志信息
      * @param int $level 参考常量LOG_
      * @param string $msg 日志内容
-     * @link http://www.xiaokubi.com/kubiphp/?tag=log-write
+     * @link http://www.isdraw.com/mvc/?tag=log-write
      */
     public function write($level,$msg)
     {
@@ -43,7 +43,7 @@ class Log
     /**
      * 初始化
      * @param string $file
-     * @link http://www.xiaokubi.com/kubiphp/?tag=log-init
+     * @link http://www.isdraw.com/mvc/?tag=log-init
      * @return Log
      */
     public static function Init($file='')
@@ -57,7 +57,7 @@ class Log
     /**
      * INFO日志
      * @param string $msg
-     * @link http://www.xiaokubi.com/kubiphp/?tag=log-info
+     * @link http://www.isdraw.com/mvc/?tag=log-info
      */
     public static function INFO($msg)
     {
@@ -67,7 +67,7 @@ class Log
     /**
      * 警告日志
      * @param string $msg
-     * @link http://www.xiaokubi.com/kubiphp/?tag=log-warn
+     * @link http://www.isdraw.com/mvc/?tag=log-warn
      */
     public static function WARN($msg)
     {
@@ -77,7 +77,7 @@ class Log
     /**
      * 调试日志
      * @param string $msg
-     * @link http://www.xiaokubi.com/kubiphp/?tag=log-debug
+     * @link http://www.isdraw.com/mvc/?tag=log-debug
      */
     public static function DEBUG($msg)
     {
@@ -87,7 +87,7 @@ class Log
     /**
      * 错误日志
      * @param string $msg
-     * @link http://www.xiaokubi.com/kubiphp/?tag=log-error
+     * @link http://www.isdraw.com/mvc/?tag=log-error
      */
     public static function ERROR($msg)
     {

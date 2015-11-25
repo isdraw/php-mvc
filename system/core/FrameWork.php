@@ -1,8 +1,9 @@
 <?php
 /**
  * @author kubi
- * @link http://www.xiaokubi.com/kubiphp/?tag=framework
+ * @link http://www.isdraw.com/mvc/?tag=framework
  * 框架的核心基类,按需求分配为model/controller
+ * @copyright Copyright (c) 2015 isdraw.com. All rights reserved.
  */
 class FrameWork{
     public $classname;
@@ -14,7 +15,7 @@ class FrameWork{
      * 渲染模版文件,位于application/views/controllername/
      * @param unknown $view 视图名称
      * @param unknown $_param 渲染参数
-     * @link http://www.xiaokubi.com/kubiphp/?tag=framework-renderer
+     * @link http://www.isdraw.com/mvc/?tag=framework-renderer
      */
     public function renderer($view,$_param=array()){
         bootstrap::view($view,$_param,0,array(
@@ -26,7 +27,7 @@ class FrameWork{
      * /**
      * 数据库PDO操作公共对象
      * @param string $poolname 配置名称
-     * @link http://www.xiaokubi.com/kubiphp/?tag=framework-pdo
+     * @link http://www.isdraw.com/mvc/?tag=framework-pdo
      * @return Drive_PDO
      */
     public function pdo($poolname='default'){
@@ -37,7 +38,7 @@ class FrameWork{
      * 数据模块操作 位于application/models
      * @param unknown $classname 类名称,去掉model_
      * @param unknown $method public的方法名
-     * @link http://www.xiaokubi.com/kubiphp/?tag=framework-model
+     * @link http://www.isdraw.com/mvc/?tag=framework-model
      * @return mixed
      */
     public function model($classname, $method){
@@ -52,7 +53,7 @@ class FrameWork{
      * 基础路由,可以使用bootstrap::route ,位于application/controllers/
      * @param unknown $classname 路由类名
      * @param unknown $method	路由public方法
-     * @link http://www.xiaokubi.com/kubiphp/?tag=framework-route
+     * @link http://www.isdraw.com/mvc/?tag=framework-route
      * @return mixed
      */
     public function route($classname,$method){

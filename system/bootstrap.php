@@ -1,4 +1,7 @@
 <?php
+/**
+ * @copyright Copyright (c) 2015 isdraw.com. All rights reserved.
+ */
 error_reporting (E_ALL);
 date_default_timezone_set ( 'PRC' );
 define ( "ALLOW_ACCESS", true );
@@ -137,7 +140,7 @@ function list_files($dir){
  * 自定义迷你PHP框架,框架包括库导入,路由,模块,视图等基础功能
  * 并可以灵活扩展,使用简单,除了数据库需要pdo环境之外,无其他配置.
  * @author kubi
- * @link http://www.xiaokubi.com/kubiphp/?tag=bootstrap
+ * @link http://www.isdraw.com/mvc/?tag=bootstrap
  */
 class bootstrap {
 	private static $_config = array ();
@@ -152,7 +155,7 @@ class bootstrap {
      * 引擎的启动文件(必须)
      * @param string $need_create_dir 是否需要创建基础目录
      * @param string $appname	当前的应用名称,默认为application
-     * @link http://www.xiaokubi.com/kubiphp/?tag=bootstrap-start
+     * @link http://www.isdraw.com/mvc/?tag=bootstrap-start
      */
 	public static function start($need_create_dir=false,$appname=NULL) {
 		session_start();
@@ -172,7 +175,7 @@ class bootstrap {
 	 * 当前的配置选项由application/config/config.php 定义
 	 * @param string $name 配置节点名称
 	 * @return boolean|multitype:
-	 * @link http://www.xiaokubi.com/kubiphp/?tag=bootstrap-config
+	 * @link http://www.isdraw.com/mvc/?tag=bootstrap-config
 	 */
 	public static function config($name) {
 	    if(empty(self::$_config)){
@@ -190,7 +193,7 @@ class bootstrap {
 	 * /**
 	 * 当前数据库连接对象
 	 * @param string $name	由application/config/config.php 中定义的数据连接方式定义
-	 * @link http://www.xiaokubi.com/kubiphp/?tag=bootstrap-pdo
+	 * @link http://www.isdraw.com/mvc/?tag=bootstrap-pdo
 	 * @return unknown|Drive_PDO
 	 */
 	public static function pdo($name='default'){
@@ -221,7 +224,7 @@ class bootstrap {
 	 * @param unknown $_param		视图渲染参数
 	 * @param number $level	渲染方式RENDERER_常量定义
 	 * @param string $option	渲染参数,由Framework定义工作路径 array('dirname'=>)
-	 * @link http://www.xiaokubi.com/kubiphp/?tag=bootstrap-view
+	 * @link http://www.isdraw.com/mvc/?tag=bootstrap-view
 	 * @return boolean|string 返回正确路径或false
 	 */
 	public static function view($view, $_param = array(), $level = 0,$option=NULL) {
@@ -268,7 +271,7 @@ class bootstrap {
 
 	/**
 	 * 删除cache
-	 * @link http://www.xiaokubi.com/kubiphp/?tag=bootstrap-remove_cache
+	 * @link http://www.isdraw.com/mvc/?tag=bootstrap-remove_cache
 	 */
 	public static function remove_cache(){
         return self::remove_cache_protected(self::appath('cache'));
@@ -305,7 +308,7 @@ class bootstrap {
 	 * 全局性路由器,位于application/controllers/目录下
 	 * @param unknown $controller 控制器类名称
 	 * @param unknown $action	控制器的public方法
-	 * @link http://www.xiaokubi.com/kubiphp/?tag=route
+	 * @link http://www.isdraw.com/mvc/?tag=route
 	 * @return mixed
 	 */
 	public static function route($controller, $action) {
@@ -323,7 +326,7 @@ class bootstrap {
 	 * 模块调用位于application/model/
 	 * @param unknown $model	类名
 	 * @param unknown $method 方法名public
-	 * @link http://www.xiaokubi.com/kubiphp/?tag=model
+	 * @link http://www.isdraw.com/mvc/?tag=model
 	 * @return mixed
 	 */
 	public static function model($model, $method) {
@@ -386,7 +389,7 @@ class bootstrap {
 	 /**
 	  * 类库或文件导入功能
 	  * @param unknown $path 目录相对application/libraries
-	  * @link http://www.xiaokubi.com/kubiphp/?tag=import
+	  * @link http://www.isdraw.com/mvc/?tag=import
 	  */
 	public static function import($path){
 		if(strpos($path,'.php')===false){
@@ -403,7 +406,7 @@ class bootstrap {
 	/**
 	 * 当前应用程序跟目录本地路径
 	 * @param string $filename	相对路径名称
-	 * @link http://www.xiaokubi.com/kubiphp/?tag=appath
+	 * @link http://www.isdraw.com/mvc/?tag=appath
 	 * @return string
 	 */
 	public static function appath($filename = "") {
@@ -417,7 +420,7 @@ class bootstrap {
 	 * URL跳转功能
 	 * @param unknown $path 跳转的路径
 	 * @param string $array 参数key=>value
-	 * @link http://www.xiaokubi.com/kubiphp/?tag=redirect
+	 * @link http://www.isdraw.com/mvc/?tag=redirect
 	 */
 	public static function redirect($path,$array=NULL){
         $str="";
@@ -435,7 +438,7 @@ class bootstrap {
 	 * 全局日志输出位于application/logs
 	 * @param unknown $msg	输出的日志可以为object/array/string,如果不是string则输出json格式
 	 * @param number $level 日志类型 LOG_ 常量
-	 * @link http://www.xiaokubi.com/kubiphp/?tag=bootstrap-log
+	 * @link http://www.isdraw.com/mvc/?tag=bootstrap-log
 	 */
 	public static function log($msg,$level=LOG_INFO){
 	    global $isdraw_trace_log;
@@ -466,6 +469,38 @@ class bootstrap {
                 Log::WARN($msg);
                 break;
         }
+	}
+	
+	/**
+	 * 创建默认控制器
+	 * @param unknown $ctrl_name 控制器名称
+	 */
+	public static function create_ctrl($ctrl_name){
+		$filename=self::appath('controllers');
+		if(file_exists($filename)){
+			$filename=self::appath('controllers/'.$ctrl_name.'.php');
+			if(!file_exists($filename)){
+				$data=sprintf("<?php\r\nclass %s extends FrameWork{\r\n\tpublic function index(){\r\n\t}\r\n}",$ctrl_name);
+				file_put_contents($filename, $data);
+			}
+		}else{
+			exit('ctrl folder is not exists');
+		}
+	}
+	
+	/**
+	 * 创建默认模块
+	 * @param unknown $model_name 模块名称
+	 */
+	public static function create_model($model_name){
+		$filename=self::appath('models');
+		if(file_exists($filename)){
+			$filename=self::appath('models/Model_'.$model_name.'.php');
+			if(!file_exists($filename)){
+				$data=sprintf("<?php\r\nclass Model_%s extends FrameWork{\r\n\tpublic function index(){\r\n\t}\r\n}",$model_name);
+				file_put_contents($filename, $data);
+			}
+		}
 	}
 	
 	/**

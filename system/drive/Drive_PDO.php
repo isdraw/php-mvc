@@ -2,7 +2,8 @@
 /**
  * PDO驱动类
  * @author kubi
- * @link http://www.xiaokubi.com/kubiphp/?tag=drive_pdo
+ * @link http://www.isdraw.com/mvc/?tag=drive_pdo
+ * @copyright Copyright (c) 2015 isdraw.com. All rights reserved.
  */
 class Drive_PDO {
 	private $pdo;
@@ -18,7 +19,7 @@ class Drive_PDO {
 	 * 查询数据库操作
 	 * @param string $sql
 	 * @param array $params
-	 * @link http://www.xiaokubi.com/kubiphp/?tag=drive_pdo-query
+	 * @link http://www.isdraw.com/mvc/?tag=drive_pdo-query
 	 * @return unknown|boolean
 	 */
 	public function query($sql, $params = array()) {
@@ -45,7 +46,7 @@ class Drive_PDO {
 	 * @param string $sql sql
 	 * @param array $params 查询参数
 	 * @param number $column 列
-	 * @link http://www.xiaokubi.com/kubiphp/?tag=drive_pdo-fetchcolumn
+	 * @link http://www.isdraw.com/mvc/?tag=drive_pdo-fetchcolumn
 	 * @return boolean
 	 */
 	public function fetchcolumn($sql, $params = array(), $column = 0) {
@@ -61,7 +62,7 @@ class Drive_PDO {
 	
 	/**
 	 * 获取最后插入数据的ID
-	 * @link http://www.xiaokubi.com/kubiphp/?tag=drive_pdo-lastInsertId
+	 * @link http://www.isdraw.com/mvc/?tag=drive_pdo-lastInsertId
 	 * @return string
 	 */
 	public function lastInsertId(){
@@ -72,7 +73,7 @@ class Drive_PDO {
 	 * 查询单条数据
 	 * @param unknown $sql sql
 	 * @param unknown $params 参数以:命名
-	 * @link http://www.xiaokubi.com/kubiphp/?tag=drive_pdo-fetch
+	 * @link http://www.isdraw.com/mvc/?tag=drive_pdo-fetch
 	 * @return boolean|mixed
 	 */
 	public function fetch($sql, $params = array()) {
@@ -91,7 +92,7 @@ class Drive_PDO {
 	 * @param string $sql sql
 	 * @param array $params 传递的参数,以:开始
 	 * @param string $keyfield
-	 * @link http://www.xiaokubi.com/kubiphp/?tag=drive_pdo-fetchAll
+	 * @link http://www.isdraw.com/mvc/?tag=drive_pdo-fetchAll
 	 * @return boolean|multitype:unknown
 	 */
 	public function fetchAll($sql, $params = array(), $keyfield = '') {
@@ -127,7 +128,7 @@ class Drive_PDO {
 	 * @param array $data	数据数组
 	 * @param array $params 更新条件
 	 * @param string $glue 条件与/或
-	 * @link http://www.xiaokubi.com/kubiphp/?tag=drive_pdo-update
+	 * @link http://www.isdraw.com/mvc/?tag=drive_pdo-update
 	 * @return Ambigous <unknown, boolean, unknown>
 	 */
 	public function update($table, $data = array(), $params = array(), $glue = 'AND') {
@@ -144,7 +145,7 @@ class Drive_PDO {
 	 * @param string $table 表名
 	 * @param array $data 数据数组
 	 * @param string $replace 是否使用REPLACE INTO
-	 * @link http://www.xiaokubi.com/kubiphp/?tag=drive_pdo-insert
+	 * @link http://www.isdraw.com/mvc/?tag=drive_pdo-insert
 	 * @return Ambigous <unknown, boolean, unknown>
 	 */
 	public function insert($table, $data = array(), $replace = FALSE) {
@@ -158,7 +159,7 @@ class Drive_PDO {
 	 * @param string $table	表名
 	 * @param array $params	条件
 	 * @param string $glue 条件与或
-	 * @link http://www.xiaokubi.com/kubiphp/?tag=drive_pdo-delete
+	 * @link http://www.isdraw.com/mvc/?tag=drive_pdo-delete
 	 * @return Ambigous <unknown, boolean, unknown>
 	 */
 	public function delete($table, $params = array(), $glue = 'AND') {
@@ -170,7 +171,7 @@ class Drive_PDO {
 
 	/**
 	 * 事务开始
-	 * @link http://www.xiaokubi.com/kubiphp/?tag=drive_pdo-delete
+	 * @link http://www.isdraw.com/mvc/?tag=drive_pdo-delete
 	 */
 	public function begin() {
 		$this->pdo->beginTransaction ();
@@ -178,7 +179,7 @@ class Drive_PDO {
 
 	/**
 	 * 确认事务
-	 * @link http://www.xiaokubi.com/kubiphp/?tag=drive_pdo-commit
+	 * @link http://www.isdraw.com/mvc/?tag=drive_pdo-commit
 	 */
 	public function commit() {
 		$this->pdo->commit ();
@@ -186,7 +187,7 @@ class Drive_PDO {
 
 	/**
 	 * 回滚
-	 * @link http://www.xiaokubi.com/kubiphp/?tag=drive_pdo-rollback
+	 * @link http://www.isdraw.com/mvc/?tag=drive_pdo-rollback
 	 */
 	public function rollback() {
 		$this->pdo->rollBack ();
@@ -224,7 +225,7 @@ class Drive_PDO {
 	 * 执行sql
 	 * @param unknown $sql 查询语句
 	 * @param unknown $tablepre 表名
-	 * @link http://www.xiaokubi.com/kubiphp/?tag=drive_pdo-run
+	 * @link http://www.isdraw.com/mvc/?tag=drive_pdo-run
 	 */
 	public function run($sql, $tablepre) {
 		if (! isset ( $sql ) || empty ( $sql ))
@@ -255,7 +256,7 @@ class Drive_PDO {
 	 * 显示字段是否存在
 	 * @param unknown $tablename 表名
 	 * @param unknown $fieldname 字段名
-	 * @link http://www.xiaokubi.com/kubiphp/?tag=drive_pdo-fieldexists
+	 * @link http://www.isdraw.com/mvc/?tag=drive_pdo-fieldexists
 	 * @return boolean
 	 */
 	public function fieldexists($tablename, $fieldname) {
@@ -267,7 +268,7 @@ class Drive_PDO {
 	 * 显示主键是否存在
 	 * @param unknown $tablename 表名
 	 * @param unknown $indexname 索引名
-	 * @link http://www.xiaokubi.com/kubiphp/?tag=drive_pdo-indexname
+	 * @link http://www.isdraw.com/mvc/?tag=drive_pdo-indexname
 	 * @return boolean
 	 */
 	public function indexexists($tablename, $indexname) {
@@ -288,7 +289,7 @@ class Drive_PDO {
 	 * 获取表名
 	 * @param unknown $table 表名
 	 * @return string
-	 * @link http://www.xiaokubi.com/kubiphp/?tag=drive_pdo-tablename
+	 * @link http://www.isdraw.com/mvc/?tag=drive_pdo-tablename
 	 */
 	public function tablename($table) {
 		return "`$table`";
