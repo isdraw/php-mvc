@@ -423,7 +423,7 @@ class bootstrap {
 	 * @return string
 	 */
 	public static function rootpath($filename=""){
-		return $_SERVER['DOCUMENT_ROOT'].dirname($_SERVER["SCRIPT_NAME"]).'/'.$filename;
+		return dirname($_SERVER["SCRIPT_NAME"]).'/'.$filename;
 	}
 
 	/**
