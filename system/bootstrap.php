@@ -423,7 +423,32 @@ class bootstrap {
 	 * @return string
 	 */
 	public static function rootpath($filename=""){
-		return dirname($_SERVER["SCRIPT_NAME"]).'/'.$filename;
+		return dirname(self::appath()).'/'.$filename;
+	}
+	
+	/**
+	 * 读取URL
+	 * @param string $url	URL
+	 * @param array $data 数据
+	 * @param string $method	方法
+	 * @return mixed
+	 */
+	public static function getURL($url,$data=array(),$method="post"){
+		$params=array();
+		foreach ( $data as $a => $b ) $params[]=sprintf("%s=%s",$a,urlencode($b));
+		$post_data = join('&', $params);
+		$postUrl = $url;
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL,$url);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		if($method=="post"){
+			curl_setopt($ch, CURLOPT_POST, 1);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+		}
+		$data = curl_exec($ch);
+		curl_close($ch);
+		return $data;
 	}
 
 	/**
