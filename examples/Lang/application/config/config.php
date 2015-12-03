@@ -4,9 +4,9 @@
 	    'default' => array(
 	        'dsn'=>'mysql:host=localhost;dbname=test',
 	        'username'=>'root',
-	        'passwd'=>'',
+	        'passwd'=>'root',
 	        'option'=>array(
-	        	PDO::ATTR_PREFETCH=>true
+	        	PDO::ATTR_PERSISTENT=>true
 	        ),
 	    	'sql'=>'SET NAMES \'utf8\';',
 	    ),

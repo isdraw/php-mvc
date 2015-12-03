@@ -10,9 +10,9 @@ class Drive_PDO {
 	public function __construct($dsn,$username,$passwd,$option,$sql=NULL){
 	    $this->pdo = new PDO($dsn, $username, $passwd, $option);
         if(!empty($sql)){
-            $this->pdo->exec($sql);
-        }
-	    $this->pdo_trigger_error(null,null,$this->pdo->errorInfo ());
+       	    $this->pdo->query($sql);
+       	}
+	   	$this->pdo_trigger_error(null,null,$this->pdo->errorInfo ());
 	}
 
 	/**

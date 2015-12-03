@@ -211,6 +211,7 @@ class bootstrap {
 			    $sql=$_c["sql"];
 			    if(empty($option) && !is_array($option)) $option=array();
 			    $_db=new Drive_PDO($dsn, $username, $passwd, $option,$sql);
+			    $isdraw_pdo_pool[$name]=$_db;
 				return $_db;
 			}
 		}

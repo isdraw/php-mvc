@@ -40,7 +40,7 @@
 	        'username'=>'root',
 	        'passwd'=>'',
 	        'option'=>array(
-	        	PDO::ATTR_PREFETCH=>true
+	        	PDO::ATTR_PERSISTENT=>true
 	        ),
 	    	'sql'=>'SET NAMES \\'utf8\\';',
 	    ),
