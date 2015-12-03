@@ -164,6 +164,7 @@ class bootstrap {
 	    self::$_tpl=new Template();
         if(empty($appname)) $appname='application';
         self::$appname=$appname;
+        header('content-type:text/html;charset=utf8');
 		if($need_create_dir){
 		    require __DIR__.'/core/Build.php';
             Build::mkdir(array ('','config','controllers','models','views','libraries','logs','langs'));
@@ -268,41 +269,6 @@ class bootstrap {
 					break;
 			}
 		}
-	}
-
-	/**
-	 * 删除cache
-	 * @link http://www.isdraw.com/mvc/?tag=bootstrap-remove_cache
-	 */
-	public static function remove_cache(){
-        return self::remove_cache_protected(self::appath('cache'));
-	}
-
-	/**
-	 * 内部删除缓存的保护方法
-	 * @param unknown $path 删除的路径
-	 * @return boolean
-	 */
-	private static function remove_cache_protected($path){
-	    $pattern="/^\\.{1,2}$/";
-	    $dh=opendir($path);
-	    while ($file=readdir($path)) {
-	        if(preg_match($pattern, $file)) {
-	            $fullpath=$path."/".$file;
-	            if(!is_dir($fullpath)) {
-	                unlink($fullpath);
-	            } else {
-	                self::remove_cache_protected($fullpath);
-	            }
-	        }
-	    }
-	    closedir($dh);
-	    //删除当前文件夹：
-	    if(rmdir($path)) {
-	        return true;
-	    } else {
-	        return false;
-	    }
 	}
 
 	/**

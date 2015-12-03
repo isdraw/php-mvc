@@ -42,6 +42,7 @@ view
 	</html>
 
 model
+
 	<?php
 	class Model_Sample extends FrameWork{
 		/**
