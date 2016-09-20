@@ -314,6 +314,26 @@ class Drive_PDO {
         }
 	}
 	
+	/**
+	 * 分页
+	 * @param int $page	当前页
+	 * @param int $size		每页大小
+	 * @param int $count	总计多少数据
+	 * @return multitype:number unknown string mixed
+	 */
+	public function paging($page,$size,$count){
+		$page=max(1,$page);
+		$page=min($count,$page);
+		$offset=($page-1)*$count;
+		return array(
+			"sql"=>sprintf(" limit %s,%s",$offset,$size),
+			"page"=>$page-1,
+			"size"=>$size,
+			"count"=>$count,
+			"pagecount"=>floor(($count-1)/$size)+1
+		);
+	}
+	
 	function __destruct(){
 		$this->pdo=null;
 	}

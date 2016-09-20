@@ -21,7 +21,7 @@ if (! function_exists ( 'isdraw_autoloader' )) {
     		}
         }
 	}
-	spl_autoload_register ( 'isdraw_autoloader' );
+	spl_autoload_register ('isdraw_autoloader' );
 }
 
 if (! function_exists ( "isdraw_error_handler" )) {
@@ -158,7 +158,6 @@ class bootstrap {
      * @link http://www.isdraw.com/mvc/?tag=bootstrap-start
      */
 	public static function start($need_create_dir=false,$appname=NULL) {
-		session_start();
 		self::$_pdo=array();
 	    self::$_map=array();
 	    self::$_tpl=new Template();
@@ -322,7 +321,7 @@ class bootstrap {
 		if (! isset ( self::$_map [$abs_class] )) {
 			if (file_exists ( $file_path )) {
 				require_once $file_path;
-				if (class_exists ( $abs_class )) {
+				if (class_exists ( $abs_class,true )) {
 					$_instance = new $abs_class ();
 					if (method_exists ( $_instance, "__init" )) {
 						$_instance->__init ();
@@ -331,7 +330,6 @@ class bootstrap {
 				}
 			}
 		}
-
 		if (isset ( self::$_map [$abs_class] )) {
 			$ctrl_instance = self::$_map [$abs_class];
 			$method="$mpre$method";
@@ -503,6 +501,20 @@ class bootstrap {
 				file_put_contents($filename, $data);
 			}
 		}
+	}
+	
+	/**
+	 * 获取当前的完成URL
+	 * @return string
+	 */
+	public static function getLocation(){
+		$url="http://";
+		if(isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") $url="https://";
+		$url.=$_SERVER["SERVER_NAME"];
+		if($_SERVER["SERVER_PORT"]!="80")$url.=$_SERVER["SERVER_PORT"];
+		$url.=$_SERVER["REQUEST_URI"];
+		if(!empty($_SERVER["QUERY_STRING"]))$url.='?'.$_SERVER['QUERY_STRING'];
+		return $url;
 	}
 	
 	/**
