@@ -324,7 +324,7 @@ class Drive_PDO {
 	public function paging($page,$size,$count){
 		$page=max(1,$page);
 		$page=min($count,$page);
-		$offset=($page-1)*$count;
+		$offset=($page-1)*$size;
 		return array(
 			"sql"=>sprintf(" limit %s,%s",$offset,$size),
 			"page"=>$page-1,
