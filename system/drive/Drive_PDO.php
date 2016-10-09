@@ -259,7 +259,7 @@ class Drive_PDO {
 	 * @link http://www.isdraw.com/mvc/?tag=drive_pdo-fieldexists
 	 * @return boolean
 	 */
-	public function fieldexists($tablename, $fieldname) {
+	public function field_exists($tablename, $fieldname) {
 		$isexists = $this->fetch ( "DESCRIBE " . $this->tablename ( $tablename ) . " `{$fieldname}`" );
 		return ! empty ( $isexists ) ? true : false;
 	}

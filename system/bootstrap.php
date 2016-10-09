@@ -12,7 +12,7 @@ define ( "RENDERER_HEAD", '<?php if(!defined("ALLOW_ACCESS"))exit("not access");
 if (! function_exists ( 'isdraw_autoloader' )) {
 	function isdraw_autoloader($classname) {
 		$class = strtolower ( $classname );
-        $dirs=array('core');
+        $dirs=array('core','libs');
         foreach ($dirs as $item){
     		$classFile = __DIR__."/$item/" . str_replace ( '_', '/', $classname ) . ".php";
     		if (file_exists ( $classFile ) && ! class_exists ( $class )) {
@@ -113,27 +113,6 @@ function website_url(){
     }
     $protocal.=$_SERVER['SERVER_NAME'].'/'.base_url();
     return $protocal;
-}
-
-/**
- * 获取目录中的子文件夹
- * @param string $dir
- */
-function list_files($dir){
-	$list=array('files'=>array(),'dirs'=>array());
-	if ( $handle = opendir($dir)) {
-		while ( ($file = readdir($handle)) !== false )
-		{
-			if(!preg_match("/(^\\.+$)|(^\\.htaccess$)/", $file)){
-				if(is_dir($dir.'/'.$file)){
-					$list['files'][]=$file;
-				}else{
-					$list['dirs'][]=$file;
-				}
-			}
-		}
-	}
-	return $list;
 }
 
 /**
@@ -357,9 +336,7 @@ class bootstrap {
 	  * @link http://www.isdraw.com/mvc/?tag=import
 	  */
 	public static function import($path){
-		if(strpos($path,'.php')===false){
-			$path=$path.'.php';
-		}
+		if(strpos($path,'.php')===false)$path=$path.'.php';
 		$lib_file=self::appath('libraries/'.$path);
 		if(file_exists($lib_file)){
 			 require_once $lib_file;
@@ -417,61 +394,6 @@ class bootstrap {
 	}
 
 	/**
-	 * URL跳转功能
-	 * @param unknown $path 跳转的路径
-	 * @param string $array 参数key=>value
-	 * @link http://www.isdraw.com/mvc/?tag=redirect
-	 */
-	public static function redirect($path,$array=NULL){
-        $str="";
-        if($array!=null){
-            foreach ($array as $key=>$value){
-                $str.=$key."=".$value."&";
-            }
-            $str=trim($str,'&');
-            $path=$path."?".$str;
-        }
-        header("Location: $path");
-    }
-
-	/**
-	 * 全局日志输出位于application/logs
-	 * @param unknown $msg	输出的日志可以为object/array/string,如果不是string则输出json格式
-	 * @param number $level 日志类型 LOG_ 常量
-	 * @link http://www.isdraw.com/mvc/?tag=bootstrap-log
-	 */
-	public static function log($msg,$level=LOG_INFO){
-	    global $isdraw_trace_log;
-	    if($isdraw_trace_log==null){
-	        $logHandler= Log::Init(self::appath("/logs/".date('Y-m-d').'.log'));
-	        $isdraw_trace_log = Log::Init($logHandler, 15);
-	    }
-	    switch (gettype($msg)){
-	        case "array":
-	        case "object":
-	            $msg=json_encode($msg);
-	            break;
-	        default:
-	            $msg=(string)$msg;
-	            break;
-	    }
-        switch ($level){
-            case LOG_DEBUG:
-                Log::DEBUG($msg);
-                break;
-            case LOG_INFO:
-                Log::INFO($msg);
-                break;
-            case LOG_ERR:
-                Log::ERROR($msg);
-                break;
-            case LOG_WARNING:
-                Log::WARN($msg);
-                break;
-        }
-	}
-	
-	/**
 	 * 创建默认控制器
 	 * @param unknown $ctrl_name 控制器名称
 	 */
@@ -511,10 +433,64 @@ class bootstrap {
 		$url="http://";
 		if(isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") $url="https://";
 		$url.=$_SERVER["SERVER_NAME"];
-		if($_SERVER["SERVER_PORT"]!="80")$url.=$_SERVER["SERVER_PORT"];
+		if($_SERVER["SERVER_PORT"]!="80") $url.=$_SERVER["SERVER_PORT"];
 		$url.=$_SERVER["REQUEST_URI"];
-		if(!empty($_SERVER["QUERY_STRING"]))$url.='?'.$_SERVER['QUERY_STRING'];
 		return $url;
+	}
+	
+	/**
+	 * URL跳转功能
+	 * @param unknown $path 跳转的路径
+	 * @param string $array 参数key=>value
+	 * @link http://www.isdraw.com/mvc/?tag=redirect
+	 */
+	public static function redirect($path,$array=NULL){
+		$str="";
+		if($array!=null){
+			foreach ($array as $key=>$value){
+				$str.=$key."=".$value."&";
+			}
+			$str=trim($str,'&');
+			$path=$path."?".$str;
+		}
+		header("Location: $path");
+	}
+	
+	/**
+	 * 全局日志输出位于application/logs
+	 * @param unknown $msg	输出的日志可以为object/array/string,如果不是string则输出json格式
+	 * @param number $level 日志类型 LOG_ 常量
+	 * @link http://www.isdraw.com/mvc/?tag=bootstrap-log
+	 */
+	public static function log($msg,$level=LOG_INFO){
+		global $isdraw_trace_log;
+		if($isdraw_trace_log==null){
+			$logHandler= Log::Init(self::appath("/logs/".date('Y-m-d').'.log'));
+			$isdraw_trace_log = Log::Init($logHandler, 15);
+		}
+		switch (gettype($msg)){
+			case "array":
+			case "object":
+				$msg=json_encode($msg);
+				break;
+			default:
+				$msg=(string)$msg;
+				break;
+		}
+		switch ($level){
+			case LOG_DEBUG:
+				Log::DEBUG($msg);
+				break;
+			case LOG_INFO:
+				Log::INFO($msg);
+				break;
+			case LOG_ERR:
+				Log::ERROR($msg);
+				break;
+			case LOG_WARNING:
+				Log::WARN($msg);
+				break;
+		}
 	}
 	
 	/**
